@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -15,8 +16,8 @@ class PostController extends Controller
      */
     public function index() : \Inertia\Response
     {
-        $post = Post::with(['user'])->get();
-        return Inertia::render('Posts/Index', ['posts' => $post]);
+        $posts = Post::with(['user'])->get();
+        return Inertia::render('Posts/Index', ['posts' => PostResource::collection($posts)]);
     }
 
     /**
@@ -36,7 +37,11 @@ class PostController extends Controller
         $data['user_id'] = Auth::id();
         Post::create($data);
 
-        return Inertia::render('Posts/Index');
+        $posts = PostResource::collection(Post::with(['user'])->get());
+        return Inertia::render('Posts/Index', [
+            'posts' => $posts,
+            'flash' => ['success' => 'Post created successfully!'],
+        ]);
     }
 
     /**

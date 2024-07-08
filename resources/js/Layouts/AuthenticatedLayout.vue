@@ -1,13 +1,35 @@
 <script setup>
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage  } from '@inertiajs/vue3';
+import Toast from "@/Components/App/Toast.vue";
 
 const showingNavigationDropdown = ref(false);
+
+const page = usePage();
+const showToast = ref(false)
+const message = ref('')
+
+onMounted(() => {
+    if (page.props.flash && page.props.flash.success) {
+
+       message.value = page.props.flash.success;
+
+        showToast.value = true;
+        setTimeout(() => {
+            showToast.value = false;
+        }, 3000); // Hide after 3 seconds
+
+    }
+    // if (page.props.flash && page.props.flash.error) {
+    //     toast.value.showToast(page.props.flash.error, 'error');
+    // }
+});
+
 </script>
 
 <template>
@@ -151,5 +173,13 @@ const showingNavigationDropdown = ref(false);
                 <slot />
             </main>
         </div>
+        <Transition
+            enter-active-class="transition ease-in-out"
+            enter-from-class="opacity-0"
+            leave-active-class="transition ease-in-out"
+            leave-to-class="opacity-0"
+        >
+            <Toast v-if="showToast" :message="message"/>
+        </Transition>
     </div>
 </template>

@@ -52,7 +52,7 @@ const props = defineProps(['posts'])
                                         {{ post.body }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ post.user.name }}
+                                        {{ post.user_name }}
                                     </td>
                                     <td class="px-6 py-4 text-right flex">
                                         <button type="button"
