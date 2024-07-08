@@ -55,10 +55,10 @@ const props = defineProps(['posts'])
                                         {{ post.user_name }}
                                     </td>
                                     <td class="px-6 py-4 text-right flex">
-                                        <button type="button"
+                                        <Link :href="route('posts.edit', post.id)" as="button"
                                                 class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
                                             Edit
-                                        </button>
+                                        </Link>
                                         <button type="button"
                                                 class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                                             Delete

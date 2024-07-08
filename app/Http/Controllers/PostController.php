@@ -14,16 +14,17 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() : \Inertia\Response
+    public function index(): \Inertia\Response
     {
-        $posts = Post::with(['user'])->get();
-        return Inertia::render('Posts/Index', ['posts' => PostResource::collection($posts)]);
+        $posts = Post::with(['user'])->latest()->get();
+        return Inertia::render('Posts/Index',
+            ['posts' => PostResource::collection($posts)]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): \Inertia\Response
     {
         return Inertia::render('Posts/Create');
     }
@@ -31,13 +32,14 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostRequest $request)
+    public function store(StorePostRequest $request): \Inertia\Response
     {
         $data = $request->validated();
         $data['user_id'] = Auth::id();
         Post::create($data);
 
-        $posts = PostResource::collection(Post::with(['user'])->get());
+        $posts = PostResource::collection(Post::with(['user'])->latest()->get());
+
         return Inertia::render('Posts/Index', [
             'posts' => $posts,
             'flash' => ['success' => 'Post created successfully!'],
@@ -57,7 +59,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return Inertia::render('Posts/Edit', ['post' => new PostResource($post)]);
     }
 
     /**
@@ -65,7 +67,14 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $post->update($request->validated());
+
+        $posts = PostResource::collection(Post::with(['user'])->latest()->get());
+
+        return Inertia::render('Posts/Index', [
+            'posts' => $posts,
+            'flash' => ['success' => 'Post created successfully!'],
+        ]);
     }
 
     /**
