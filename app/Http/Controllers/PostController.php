@@ -51,7 +51,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return Inertia::render('Posts/Show', ['post' => new PostResource($post)]);
     }
 
     /**
@@ -69,12 +69,12 @@ class PostController extends Controller
     {
         $post->update($request->validated());
 
-        $posts = PostResource::collection(Post::with(['user'])->latest()->get());
-
-        return Inertia::render('Posts/Index', [
-            'posts' => $posts,
-            'flash' => ['success' => 'Post created successfully!'],
-        ]);
+        return Inertia::render('Posts/Show',
+            [
+                'post' => new PostResource($post),
+                'flash' => ['success' => 'Post created successfully!'],
+            ]
+        );
     }
 
     /**

@@ -2,16 +2,16 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {Head, Link, router} from "@inertiajs/vue3";
 import Modal from "@/Components/Modal.vue";
-import TextInput from "@/Components/TextInput.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import InputError from "@/Components/InputError.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import {ref} from "vue";
+import useTime from "@/Composteble/time.js";
 
 const props = defineProps(['posts'])
 const confirmingPostDeletion = ref(false)
 const postToDelete = ref(null)
+
+const {formatMessageDateLong} = useTime()
 const deletePost = () => {
     router.delete(route('posts.destroy', postToDelete.value))
     closeModal()
@@ -59,6 +59,9 @@ const closeModal =() =>{
                                         User Name
                                     </th>
                                     <th scope="col" class="px-6 py-3">
+                                        Created at
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
                                         <span class="sr-only">Actions</span>
                                     </th>
                                 </tr>
@@ -75,12 +78,16 @@ const closeModal =() =>{
                                     <td class="px-6 py-4">
                                         {{ post.user_name }}
                                     </td>
+                                    <td class="px-6 py-4">
+                                        {{ formatMessageDateLong(post.created_at) }}
+                                    </td>
                                     <td class="px-6 py-4 text-right flex">
+                                        <Link :href="route('posts.show', post.id)" as="button" class="text-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400 dark:focus:ring-yellow-900">View</Link>
                                         <Link :href="route('posts.edit', post.id)" as="button"
                                                 class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
                                             Edit
                                         </Link>
-                                        <button type="button" @click="confirmingDeletePost(post.id)"
+                                       <button type="button" @click="confirmingDeletePost(post.id)"
                                                 class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                                             Delete
                                         </button>
