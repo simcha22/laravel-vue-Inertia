@@ -1,9 +1,30 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import {Head, Link} from "@inertiajs/vue3";
+import {Head, Link, router} from "@inertiajs/vue3";
+import Modal from "@/Components/Modal.vue";
+import TextInput from "@/Components/TextInput.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import InputError from "@/Components/InputError.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import DangerButton from "@/Components/DangerButton.vue";
+import {ref} from "vue";
 
 const props = defineProps(['posts'])
+const confirmingPostDeletion = ref(false)
+const postToDelete = ref(null)
+const deletePost = () => {
+    router.delete(route('posts.destroy', postToDelete.value))
+    closeModal()
+}
 
+const confirmingDeletePost = (id) => {
+    postToDelete.value = id
+    confirmingPostDeletion.value = true
+}
+
+const closeModal =() =>{
+    confirmingPostDeletion.value = false
+}
 </script>
 
 <template>
@@ -59,7 +80,7 @@ const props = defineProps(['posts'])
                                                 class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
                                             Edit
                                         </Link>
-                                        <button type="button"
+                                        <button type="button" @click="confirmingDeletePost(post.id)"
                                                 class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                                             Delete
                                         </button>
@@ -73,5 +94,25 @@ const props = defineProps(['posts'])
                 </div>
             </div>
         </div>
+
+        <Modal :show="confirmingPostDeletion" @close="closeModal">
+            <div class="p-6">
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                    Are you sure you want to delete this post?
+                </h2>
+
+                <div class="mt-6 flex justify-end">
+                    <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
+
+                    <DangerButton
+                        class="ms-3"
+                        @click="deletePost"
+                    >
+                        Delete Post
+                    </DangerButton>
+                </div>
+            </div>
+        </Modal>
+
     </AuthenticatedLayout>
 </template>

@@ -82,6 +82,13 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        $posts = PostResource::collection(Post::with(['user'])->latest()->get());
+
+        return Inertia::render('Posts/Index', [
+            'posts' => $posts,
+            'flash' => ['success' => 'Post Delete successfully!'],
+        ]);
     }
 }
