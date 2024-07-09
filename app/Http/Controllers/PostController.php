@@ -91,4 +91,11 @@ class PostController extends Controller
             'flash' => ['success' => 'Post Delete successfully!'],
         ]);
     }
+
+    public function myPosts()
+    {
+        $posts = Post::where('user_id', auth()->user()->id)->with(['user'])->latest()->get();
+        return Inertia::render('Posts/Index',
+            ['posts' => PostResource::collection($posts)]);
+    }
 }
