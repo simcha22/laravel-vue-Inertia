@@ -36,8 +36,9 @@ const {formatMessageDateLong} = useTime()
 
                                 <div class="flex items-center gap-4 mt-10">
                                     <img class="w-10 h-10 rounded-full" src="@/assets/Images/avatar.jpeg" alt="">
+
                                     <div class="font-medium dark:text-white">
-                                        <div>{{ post.user_name }}</div>
+                                        <div><small>Created by:</small> {{ post.user_name }}</div>
                                     </div>
                                 </div>
                             </div>
