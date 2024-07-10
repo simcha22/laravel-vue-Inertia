@@ -3,6 +3,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {Head, Link} from "@inertiajs/vue3";
 import useTime from "@/Composteble/time.js";
 import CommentItem from "@/Pages/Posts/Components/CommentItem.vue";
+import CreateComment from "@/Pages/Posts/Components/CreateComment.vue";
 
 const props = defineProps(['post'])
 const {formatMessageDateLong} = useTime()
@@ -50,6 +51,7 @@ const {formatMessageDateLong} = useTime()
                         </div>
                         <div
                             class="flex flex-col bg-white mt-4 p-4 border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                            <CreateComment :post="post.id"/>
                             <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
                                 Comments
                             </h3>
