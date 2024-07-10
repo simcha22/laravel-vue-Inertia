@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
+use App\Models\Attachment;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -36,8 +40,24 @@ class PostController extends Controller
     {
         $data = $request->validated();
         $data['user_id'] = Auth::id();
-        Post::create($data);
+        $files = $data['files'] ?? [];
+        $post = Post::create($data);
 
+        if ($files) {
+            foreach ($files as $file) {
+                $directory = 'post/' . Str::random(32);
+                Storage::makeDirectory($directory);
+                $model = [
+                    'attachmentable_id' => $post->id,
+                    'attachmentable_type' => Post::class,
+                    'name' => $file->getClientOriginalName(),
+                    'mime' => $file->getClientMimeType(),
+                    'size' => $file->getSize(),
+                    'path' => $file->store($directory, 'public'),
+                ];
+                Attachment::create($model);
+            }
+        }
         $posts = PostResource::collection(Post::with(['user'])->latest()->get());
 
         return Inertia::render('Posts/Index', [
