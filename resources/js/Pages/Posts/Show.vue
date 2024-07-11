@@ -4,6 +4,7 @@ import {Head, Link} from "@inertiajs/vue3";
 import useTime from "@/Composteble/time.js";
 import CommentItem from "@/Pages/Posts/Components/CommentItem.vue";
 import CreateComment from "@/Pages/Posts/Components/CreateComment.vue";
+import AttachmentItemView from "@/Pages/Posts/Components/AttachmentItemView.vue";
 
 const props = defineProps(['post'])
 const {formatMessageDateLong} = useTime()
@@ -34,7 +35,11 @@ const {formatMessageDateLong} = useTime()
                                     {{ post.body }}
                                 </p>
 
-                                <div class="flex items-center gap-4 mt-10">
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                                    <AttachmentItemView v-for="file in post.attachments" :file="file" />
+                                </div>
+
+                                <div class="flex items-center gap-4 mt-6">
                                     <img class="w-10 h-10 rounded-full" src="@/assets/Images/avatar.jpeg" alt="">
 
                                     <div class="font-medium dark:text-white">

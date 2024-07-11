@@ -17,6 +17,7 @@ class PostResource extends JsonResource
             'body' => $this->body,
             'user_name' => $this->user->name,
             'comments' => CommentResource::collection($this->comments->sortByDesc('created_at')),
+            'attachments' => AttachmentResource::collection($this->attachment),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

@@ -21,6 +21,7 @@ const onFileChange = (ev) =>{
         return {
             file: file,
             url: URL.createObjectURL(file),
+            delete: true
         }
     })
 
@@ -97,7 +98,7 @@ const removeFile = (url) =>{
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                 <AttachmentItemView v-for="file in chosenFiles" :file="file" @remove="removeFile"/>
                             </div>
 

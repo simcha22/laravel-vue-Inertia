@@ -58,7 +58,7 @@ class PostController extends Controller
                 Attachment::create($model);
             }
         }
-        $posts = PostResource::collection(Post::with(['user'])->latest()->get());
+        $posts = PostResource::collection(Post::with(['user', 'attachment'])->latest()->get());
 
         return Inertia::render('Posts/Index', [
             'posts' => $posts,
