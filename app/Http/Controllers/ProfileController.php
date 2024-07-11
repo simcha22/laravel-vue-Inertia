@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AttacmentAploadRequest;
+use App\Http\Requests\AttacmentUploadRequest;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Attachment;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -59,5 +66,28 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function upload(AttacmentUploadRequest $request): RedirectResponse
+    {
+        $data = $request->validated();
+        $files = $data['files'] ?? [];
+
+        if ($files) {
+            foreach ($files as $file) {
+                $directory = 'user/' . Str::random(32);
+                Storage::makeDirectory($directory);
+                $model = [
+                    'attachmentable_id' => Auth::id(),
+                    'attachmentable_type' => User::class,
+                    'name' => $file->getClientOriginalName(),
+                    'mime' => $file->getClientMimeType(),
+                    'size' => $file->getSize(),
+                    'path' => $file->store($directory, 'public'),
+                ];
+                Attachment::create($model);
+            }
+        }
+        return Redirect::to('/profile');
     }
 }
