@@ -57,6 +57,9 @@ onMounted(() => {
                                 <NavLink :href="route('posts.index')" :active="route().current('posts.*')">
                                     Blog Post
                                 </NavLink>
+                                <NavLink :href="route('workouts.index')" :active="route().current('workouts.*')">
+                                    Workout
+                                </NavLink>
                             </div>
                         </div>
 
