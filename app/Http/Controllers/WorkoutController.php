@@ -39,7 +39,7 @@ class WorkoutController extends Controller
      */
     public function show(Workout $workout)
     {
-        //
+        return Inertia::render('Workouts/Show', ['workout' => $workout]);
     }
 
     /**
