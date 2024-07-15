@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -50,5 +51,18 @@ class User extends Authenticatable
     public function attachment() : MorphMany
     {
         return $this->morphMany(Attachment::class, 'attachmentable');
+    }
+
+    public function roles() : BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function permissions(): array
+    {
+        return $this->roles()->with('permissions')->get()
+            ->map(function ($role) {
+                return $role->permissions->pluck('name');
+            })->flatten()->values()->unique()->toArray();
     }
 }
