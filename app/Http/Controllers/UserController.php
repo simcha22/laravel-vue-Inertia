@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -27,7 +28,8 @@ class UserController extends Controller
     {
         $this->authorize('user.create');
 
-        return Inertia::render('Users/Create');
+        $roles = Role::all();
+        return Inertia::render('Users/Create', ['roles' => $roles]);
     }
 
     /**
@@ -36,8 +38,8 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $this->authorize('user.create');
-
-        User::create($request->validated());
+        $user = User::create($request->validated());
+        $user->roles()->attach($request->role);
 
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
@@ -55,7 +57,11 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return Inertia::render('Users/Edit', ['user' => $user]);
+        $roles = Role::all();
+        $user = User::with(['roles'])->find($user)->first();
+        return Inertia::render('Users/Edit', [
+            'user' => $user,
+            'roles' => $roles]);
     }
 
     /**
@@ -64,6 +70,8 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->validated());
+        $user->roles()->detach();
+        $user->roles()->attach($request->role);
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
@@ -72,6 +80,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 }

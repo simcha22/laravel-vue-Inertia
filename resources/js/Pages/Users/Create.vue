@@ -6,12 +6,14 @@ import InputLabel from "@/Components/InputLabel.vue";
 import InputError from "@/Components/InputError.vue";
 import SaveButton from "@/Components/SaveButton.vue";
 import {ref} from "vue";
+import Select from "@/Components/Select.vue";
 
 const passwordInput = ref(null);
-
+const props = defineProps(['roles'])
 const form = useForm({
     name : '',
     email: '',
+    role: '',
     password: '',
     password_confirmation: '',
 });
@@ -74,6 +76,14 @@ const savePost = () =>{
                                 />
 
                                 <InputError class="mt-2" :message="form.errors.email" />
+                            </div>
+
+                            <div>
+                                <InputLabel for="role" value="Role" />
+
+                                <Select v-model="form.role" :items="roles"/>
+
+                                <InputError class="mt-2" :message="form.errors.role" />
                             </div>
 
                             <div>
