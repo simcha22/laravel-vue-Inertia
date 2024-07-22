@@ -81,7 +81,7 @@ const savePost = () =>{
                             <div>
                                 <InputLabel for="role" value="Role" />
 
-                                <Select v-model="form.role" :items="roles"/>
+                                <Select class="mt-1 block w-full" v-model="form.role" :items="roles"/>
 
                                 <InputError class="mt-2" :message="form.errors.role" />
                             </div>
