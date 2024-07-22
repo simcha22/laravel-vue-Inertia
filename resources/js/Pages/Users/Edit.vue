@@ -5,11 +5,14 @@ import TextInput from "@/Components/TextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import InputError from "@/Components/InputError.vue";
 import SaveButton from "@/Components/SaveButton.vue";
+import Select from "@/Components/Select.vue";
 
-const props = defineProps(['user'])
+const props = defineProps(['user', 'roles'])
+
 const form = useForm({
     name : props.user.name,
     email: props.user.email,
+    role: props.user.roles[0].id
 });
 
 
@@ -66,6 +69,14 @@ const savePost = () =>{
                                 />
 
                                 <InputError class="mt-2" :message="form.errors.email" />
+                            </div>
+
+                            <div>
+                                <InputLabel for="role" value="Role" />
+
+                                <Select v-model="form.role" :items="roles"/>
+
+                                <InputError class="mt-2" :message="form.errors.role" />
                             </div>
 
                             <div class="flex items-center gap-4">
