@@ -3,8 +3,9 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import DeleteUserForm from './Partials/DeleteUserForm.vue';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
-import { Head } from '@inertiajs/vue3';
+import {Head, usePage} from '@inertiajs/vue3';
 import UpdateProfileAttachmentForm from "@/Pages/Profile/Partials/UpdateProfileAttachmentForm.vue";
+import PermissionsView from "@/Pages/Profile/Partials/PermissionsView.vue";
 
 defineProps({
     mustVerifyEmail: {
@@ -14,6 +15,7 @@ defineProps({
         type: String,
     },
 });
+
 </script>
 
 <template>
@@ -40,6 +42,10 @@ defineProps({
 
                 <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                     <UpdatePasswordForm class="max-w-xl" />
+                </div>
+
+                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                    <PermissionsView :permissions="permissions" class="max-w-xl" />
                 </div>
 
                 <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">

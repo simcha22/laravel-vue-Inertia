@@ -54,11 +54,14 @@ onMounted(() => {
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('posts.index')" :active="route().current('posts.*')">
+                                <NavLink v-if="can('post.viewAny')" :href="route('posts.index')" :active="route().current('posts.*')">
                                     Blog Post
                                 </NavLink>
-                                <NavLink :href="route('workouts.index')" :active="route().current('workouts.*')">
+                                <NavLink v-if="can('workout.viewAny')" :href="route('workouts.index')" :active="route().current('workouts.*')">
                                     Workout
+                                </NavLink>
+                                <NavLink v-if="can('user.viewAny')" :href="route('users.index')" :active="route().current('users.*')">
+                                    Users
                                 </NavLink>
                             </div>
                         </div>

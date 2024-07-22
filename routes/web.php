@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\WorkoutController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -28,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('posts', PostController::class);
+    Route::resource('users', UserController::class);
 
     Route::post('posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::patch('comments/{comment}', [CommentController::class, 'update'])->name('comments.update');

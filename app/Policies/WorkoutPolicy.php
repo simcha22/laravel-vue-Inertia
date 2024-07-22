@@ -13,7 +13,7 @@ class WorkoutPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+
     }
 
     /**
@@ -21,7 +21,7 @@ class WorkoutPolicy
      */
     public function view(User $user, Workout $workout): bool
     {
-        //
+
     }
 
     /**
