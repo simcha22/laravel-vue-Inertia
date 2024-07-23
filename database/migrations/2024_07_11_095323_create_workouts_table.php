@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('done_at')->nullable();
             $table->foreignId('parent_id')->nullable()->constrained('workouts')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
