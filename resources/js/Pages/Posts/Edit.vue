@@ -15,7 +15,7 @@ const form = useForm({
 </script>
 
 <template>
-    <Head title="Posts" />
+    <Head title="Edit post" />
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Edit post</h2>

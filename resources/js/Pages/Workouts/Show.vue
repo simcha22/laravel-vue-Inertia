@@ -1,4 +1,5 @@
 <template>
+    <Head :title="workout.name"/>
     <AuthenticatedLayout>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -23,7 +24,7 @@
                                     <img class="w-10 h-10 rounded-full" src="@/assets/Images/avatar.jpeg" alt="">
 
                                     <div class="font-medium dark:text-white">
-                                        <div><small>Created by:</small> {{ workout.user_name }}</div>
+                                        <div><small>Created by:</small> {{ workout.user.name }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -48,6 +49,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import AttachmentItemView from "@/Pages/Posts/Components/AttachmentItemView.vue";
 import useTime from "@/Composteble/time.js";
+import {Head} from "@inertiajs/vue3";
 
 
 const props = defineProps(['workout'])

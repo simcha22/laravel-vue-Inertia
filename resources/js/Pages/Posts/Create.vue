@@ -40,7 +40,7 @@ const removeFile = (url) =>{
 </script>
 
 <template>
-    <Head title="Posts" />
+    <Head title="Create Post" />
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Create post</h2>
@@ -71,7 +71,7 @@ const removeFile = (url) =>{
                                 <InputLabel for="body" value="Body" />
 
                                 <textarea
-                                    id="title"
+                                    id="body"
                                     class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                                     v-model="form.body"
                                     required

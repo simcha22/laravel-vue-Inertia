@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreWorkoutRequest;
 use App\Http\Requests\UpdateWorkoutRequest;
 use App\Models\Workout;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class WorkoutController extends Controller
@@ -23,7 +24,7 @@ class WorkoutController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Workouts/Create');
     }
 
     /**
@@ -31,7 +32,12 @@ class WorkoutController extends Controller
      */
     public function store(StoreWorkoutRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['user_id'] = Auth::id();
+
+        $workout = Workout::create($data);
+
+        return redirect()->route('workouts.index');
     }
 
     /**
@@ -39,6 +45,7 @@ class WorkoutController extends Controller
      */
     public function show(Workout $workout)
     {
+        $workout = Workout::with('user')->find($workout)->first();
         return Inertia::render('Workouts/Show', ['workout' => $workout]);
     }
 
