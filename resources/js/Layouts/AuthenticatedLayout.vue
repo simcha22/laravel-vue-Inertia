@@ -60,6 +60,9 @@ onMounted(() => {
                                 <NavLink v-if="can('workout.viewAny')" :href="route('workouts.index')" :active="route().current('workouts.*')">
                                     Workout
                                 </NavLink>
+                                <NavLink v-if="can('exercise.viewAny')" :href="route('exercises.index')" :active="route().current('exercises.*')">
+                                    Exercises
+                                </NavLink>
                                 <NavLink v-if="can('user.viewAny')" :href="route('users.index')" :active="route().current('users.*')">
                                     Users
                                 </NavLink>

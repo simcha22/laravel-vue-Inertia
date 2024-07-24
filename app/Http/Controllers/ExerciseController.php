@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
+use App\Http\Resources\ExerciseResource;
 use App\Models\Exercise;
+use Inertia\Inertia;
 
 class ExerciseController extends Controller
 {
@@ -13,7 +15,8 @@ class ExerciseController extends Controller
      */
     public function index()
     {
-        //
+        $exercises = Exercise::orderBy('created_at', 'desc')->get();
+        return Inertia::render('Exercises/Index', ['exercises' => ExerciseResource::collection($exercises)]);
     }
 
     /**
