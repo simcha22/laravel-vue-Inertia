@@ -1,31 +1,16 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import {Head, Link, router} from "@inertiajs/vue3";
-import Modal from "@/Components/Modal.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
-import DangerButton from "@/Components/DangerButton.vue";
+import {Head} from "@inertiajs/vue3";
 import {ref} from "vue";
-import useTime from "@/Composteble/time.js";
 import WorkoutItem from "@/Pages/Workouts/Components/WorkoutItem.vue";
+import CreateModal from "@/Pages/Workouts/Components/CreateModal.vue";
 
 const props = defineProps(['workouts'])
-const confirmingPostDeletion = ref(false)
-const postToDelete = ref(null)
+const showCreateWorkout = ref(false)
 
-const {formatMessageDateLong} = useTime()
-// const deletePost = () => {
-//     router.delete(route('posts.destroy', postToDelete.value))
-//     closeModal()
-// }
-//
-// const confirmingDeletePost = (id) => {
-//     postToDelete.value = id
-//     confirmingPostDeletion.value = true
-// }
-//
-// const closeModal =() =>{
-//     confirmingPostDeletion.value = false
-// }
+const closeModal =() =>{
+    showCreateWorkout.value = false
+}
 </script>
 
 <template>
@@ -34,10 +19,10 @@ const {formatMessageDateLong} = useTime()
         <template #header>
             <div class="flex justify-between items-center">
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Workouts</h2>
-                <Link :href="route('workouts.create')"
+                <button @click="showCreateWorkout = true"
                       class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2">
                     Create new Workout
-                </Link>
+                </button>
             </div>
         </template>
         <div class="py-12">
@@ -54,5 +39,7 @@ const {formatMessageDateLong} = useTime()
                 </div>
             </div>
         </div>
+
+        <CreateModal :show="showCreateWorkout" @close="closeModal"/>
     </AuthenticatedLayout>
 </template>

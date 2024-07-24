@@ -15,7 +15,7 @@ class WorkoutController extends Controller
      */
     public function index()
     {
-        $workouts = Workout::all();
+        $workouts = Workout::orderBy('created_at', 'desc')->get();
         return Inertia::render('Workouts/Index', ['workouts' => $workouts]);
     }
 

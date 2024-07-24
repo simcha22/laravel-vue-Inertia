@@ -14,6 +14,10 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
+    side: {
+        type: String,
+        default: 'center'
+    }
 });
 
 const emit = defineEmits(['close']);
@@ -86,8 +90,8 @@ const maxWidthClass = computed(() => {
                 >
                     <div
                         v-show="show"
-                        class="mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
-                        :class="maxWidthClass"
+                        class="mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full"
+                        :class="maxWidthClass + ' ' + (side === 'left' ? 'sm:mr-auto': (side === 'right' ? 'sm:ml-auto' : 'sm:mx-auto'))"
                     >
                         <slot v-if="show" />
                     </div>
