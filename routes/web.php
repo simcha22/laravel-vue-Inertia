@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
@@ -38,6 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::get('user/posts', [PostController::class, 'myPosts'])->name('user.posts');
 
     Route::resource('/workouts', WorkoutController::class);
+    Route::resource('/exercises', ExerciseController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -11,7 +11,7 @@ class StoreExerciseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreExerciseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string',
+            'details' => 'required|string',
+            'highlights' => 'required|string',
+            'link' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
         ];
     }
 }

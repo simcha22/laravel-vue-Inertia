@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWorkoutRequest;
 use App\Http\Requests\UpdateWorkoutRequest;
+use App\Http\Resources\WorkoutResource;
 use App\Models\Workout;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -16,7 +17,7 @@ class WorkoutController extends Controller
     public function index()
     {
         $workouts = Workout::orderBy('created_at', 'desc')->get();
-        return Inertia::render('Workouts/Index', ['workouts' => $workouts]);
+        return Inertia::render('Workouts/Index', ['workouts' => WorkoutResource::collection($workouts)]);
     }
 
     /**
@@ -46,7 +47,7 @@ class WorkoutController extends Controller
     public function show(Workout $workout)
     {
         $workout = Workout::with('user')->find($workout)->first();
-        return Inertia::render('Workouts/Show', ['workout' => $workout]);
+        return Inertia::render('Workouts/Show', ['workout' => new WorkoutResource($workout)]);
     }
 
     /**
