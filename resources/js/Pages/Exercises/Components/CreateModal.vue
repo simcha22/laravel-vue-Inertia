@@ -2,7 +2,7 @@
     <Modal :show="show" @close="emit('close')" side="right">
         <div class="p-6">
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                Create Workout
+                Create Exercise
             </h2>
 
             <form @submit.prevent="savePost" class="space-y-6">
@@ -23,50 +23,50 @@
                     <InputError class="mt-2" :message="form.errors.name" />
                 </div>
 
-
                 <div>
-                    <InputLabel for="content" value="Content" />
+                    <InputLabel for="details" value="Details" />
 
                     <textarea
-                        id="content"
+                        id="details"
                         class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                        v-model="form.content"
+                        v-model="form.details"
                         required
-                        autocomplete="content"
+                        autocomplete="details"
                     ></textarea>
 
-                    <InputError class="mt-2" :message="form.errors.content" />
+                    <InputError class="mt-2" :message="form.errors.details" />
                 </div>
 
                 <div>
-                    <InputLabel for="done_at" value="Done at" />
+                    <InputLabel for="highlights" value="Highlights" />
+
+                    <textarea
+                        id="highlights"
+                        class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                        v-model="form.highlights"
+                        required
+                        autocomplete="highlights"
+                    ></textarea>
+
+                    <InputError class="mt-2" :message="form.errors.highlights" />
+                </div>
+
+                <div>
+                    <InputLabel for="link" value="Link" />
 
                     <TextInput
-                        id="done_at"
-                        type="datetime-local"
+                        id="link"
+                        type="text"
                         class="mt-1 block w-full"
-                        v-model="form.done_at"
+                        v-model="form.link"
                         required
                         autofocus
-                        autocomplete="done_at"
+                        autocomplete="link"
                     />
 
-                    <InputError class="mt-2" :message="form.errors.done_at" />
+                    <InputError class="mt-2" :message="form.errors.link" />
                 </div>
 
-                <div>
-                    <InputLabel for="score" value="Score" />
-
-                    <textarea
-                        id="score"
-                        class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                        v-model="form.score"
-                        required
-                        autocomplete="score"
-                    ></textarea>
-
-                    <InputError class="mt-2" :message="form.errors.score" />
-                </div>
                 <div class="mt-6 flex justify-end">
 
                     <SaveButton :disabled="form.processing">Save</SaveButton>
@@ -91,7 +91,6 @@
 <script setup>
 import Modal from "@/Components/Modal.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import DangerButton from "@/Components/DangerButton.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
@@ -103,13 +102,13 @@ const emit = defineEmits(['close'])
 
 const form = useForm({
     name : '',
-    content: '',
-    done_at: '',
-    score: '',
+    details: '',
+    highlights: '',
+    link:''
 });
 
 const savePost = () =>{
-    form.post(route('workouts.store'))
+    form.post(route('exercises.store'))
     emit('close')
 }
 

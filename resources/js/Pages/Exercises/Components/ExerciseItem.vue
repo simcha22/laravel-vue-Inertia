@@ -12,7 +12,7 @@
                 {{exercise.name}}
             </h3>
             <p class="mt-1 text-gray-500 dark:text-neutral-400">
-                {{exercise.content}}
+                {{exercise.details}}
             </p>
         </div>
     </Link>

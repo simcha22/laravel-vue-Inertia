@@ -3,14 +3,14 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {Head} from "@inertiajs/vue3";
 import {ref} from "vue";
 
-import CreateModal from "@/Pages/Workouts/Components/CreateModal.vue";
+import CreateModal from "@/Pages/Exercises/Components/CreateModal.vue";
 import ExerciseItem from "@/Pages/Exercises/Components/ExerciseItem.vue";
 
 const props = defineProps(['exercises'])
-const showCreateWorkout = ref(false)
+const showCreateExercise = ref(false)
 
 const closeModal =() =>{
-    showCreateWorkout.value = false
+    showCreateExercise.value = false
 }
 </script>
 
@@ -20,7 +20,7 @@ const closeModal =() =>{
         <template #header>
             <div class="flex justify-between items-center">
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Exercises</h2>
-                <button @click="showCreateWorkout = true"
+                <button @click="showCreateExercise = true"
                         class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2">
                     Create new Exercise
                 </button>
@@ -41,6 +41,6 @@ const closeModal =() =>{
             </div>
         </div>
 
-<!--        <CreateModal :show="showCreateWorkout" @close="closeModal"/>-->
+        <CreateModal :show="showCreateExercise" @close="closeModal"/>
     </AuthenticatedLayout>
 </template>

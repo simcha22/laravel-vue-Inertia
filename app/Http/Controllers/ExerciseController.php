@@ -6,6 +6,7 @@ use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
 use App\Http\Resources\ExerciseResource;
 use App\Models\Exercise;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class ExerciseController extends Controller
@@ -32,7 +33,8 @@ class ExerciseController extends Controller
      */
     public function store(StoreExerciseRequest $request)
     {
-        //
+        Exercise::create($request->validated());
+        return Redirect::route('exercises.index');
     }
 
     /**
