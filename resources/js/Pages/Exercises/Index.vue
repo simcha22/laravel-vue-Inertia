@@ -5,11 +5,12 @@ import {ref} from "vue";
 
 import CreateModal from "@/Pages/Exercises/Components/CreateModal.vue";
 import ExerciseItem from "@/Pages/Exercises/Components/ExerciseItem.vue";
+import CategoryItem from "@/Pages/Exercises/Components/CategoryItem.vue";
 
-const props = defineProps(['exercises'])
+const props = defineProps(['categorise'])
 const showCreateExercise = ref(false)
 
-const closeModal =() =>{
+const closeModal = () => {
     showCreateExercise.value = false
 }
 </script>
@@ -31,16 +32,14 @@ const closeModal =() =>{
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                        <div class="relative overflow-x-auto">
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                <ExerciseItem v-for="exercise in exercises" :exercise="exercise"/>
-                            </div>
-                        </div>
+                        <ol class="relative border-s border-gray-200 dark:border-gray-700">
+                            <CategoryItem v-for="category in categorise" :category="category"/>
+                        </ol>
                     </div>
                 </div>
             </div>
         </div>
 
-        <CreateModal :show="showCreateExercise" @close="closeModal"/>
+        <CreateModal :show="showCreateExercise" @close="closeModal" :categorise="categorise"/>
     </AuthenticatedLayout>
 </template>

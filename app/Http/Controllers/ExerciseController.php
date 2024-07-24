@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ExerciseResource;
+use App\Models\Category;
 use App\Models\Exercise;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -16,8 +18,8 @@ class ExerciseController extends Controller
      */
     public function index()
     {
-        $exercises = Exercise::orderBy('created_at', 'desc')->get();
-        return Inertia::render('Exercises/Index', ['exercises' => ExerciseResource::collection($exercises)]);
+        $categorise = Category::with(['exercises'])->orderBy('name', 'asc')->get();
+        return Inertia::render('Exercises/Index', ['categorise' => CategoryResource::collection($categorise)]);
     }
 
     /**

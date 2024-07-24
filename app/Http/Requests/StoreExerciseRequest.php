@@ -26,6 +26,7 @@ class StoreExerciseRequest extends FormRequest
             'details' => 'required|string',
             'highlights' => 'required|string',
             'link' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
         ];
     }
 }

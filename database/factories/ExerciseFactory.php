@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ class ExerciseFactory extends Factory
             'name' => $this->faker->sentence(),
             'details' => $this->faker->paragraph(),
             'highlights' => $this->faker->paragraph(),
+            'category_id' => $this->faker->randomElement(Category::pluck('id')->toArray())
         ];
     }
 }

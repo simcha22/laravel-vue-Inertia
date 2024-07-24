@@ -1,5 +1,5 @@
 <template>
-    <Modal :show="show" @close="emit('close')" side="right">
+    <Modal :show="show" @close="closeModal" side="right">
         <div class="p-6">
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                 Create Exercise
@@ -8,7 +8,7 @@
             <form @submit.prevent="savePost" class="space-y-6">
 
                 <div>
-                    <InputLabel for="name" value="Name" />
+                    <InputLabel for="name" value="Name"/>
 
                     <TextInput
                         id="name"
@@ -20,11 +20,20 @@
                         autocomplete="name"
                     />
 
-                    <InputError class="mt-2" :message="form.errors.name" />
+                    <InputError class="mt-2" :message="form.errors.name"/>
                 </div>
 
                 <div>
-                    <InputLabel for="details" value="Details" />
+                    <InputLabel for="category" value="Category"/>
+
+                    <Select class="mt-1 block w-full" id="category" name="category" v-model="form.category_id"
+                            :items="categorise"/>
+
+                    <InputError class="mt-2" :message="form.errors.category_id"/>
+                </div>
+
+                <div>
+                    <InputLabel for="details" value="Details"/>
 
                     <textarea
                         id="details"
@@ -34,11 +43,11 @@
                         autocomplete="details"
                     ></textarea>
 
-                    <InputError class="mt-2" :message="form.errors.details" />
+                    <InputError class="mt-2" :message="form.errors.details"/>
                 </div>
 
                 <div>
-                    <InputLabel for="highlights" value="Highlights" />
+                    <InputLabel for="highlights" value="Highlights"/>
 
                     <textarea
                         id="highlights"
@@ -48,11 +57,11 @@
                         autocomplete="highlights"
                     ></textarea>
 
-                    <InputError class="mt-2" :message="form.errors.highlights" />
+                    <InputError class="mt-2" :message="form.errors.highlights"/>
                 </div>
 
                 <div>
-                    <InputLabel for="link" value="Link" />
+                    <InputLabel for="link" value="Link"/>
 
                     <TextInput
                         id="link"
@@ -64,7 +73,7 @@
                         autocomplete="link"
                     />
 
-                    <InputError class="mt-2" :message="form.errors.link" />
+                    <InputError class="mt-2" :message="form.errors.link"/>
                 </div>
 
                 <div class="mt-6 flex justify-end">
@@ -80,9 +89,8 @@
                         <p v-if="form.recentlySuccessful" class="text-sm text-gray-600 dark:text-gray-400">Saved.</p>
                     </Transition>
 
-                    <SecondaryButton @click="emit('close')"> Cancel </SecondaryButton>
+                    <SecondaryButton @click="closeModal"> Cancel</SecondaryButton>
                 </div>
-
             </form>
         </div>
     </Modal>
@@ -96,19 +104,27 @@ import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import SaveButton from "@/Components/SaveButton.vue";
 import {useForm} from "@inertiajs/vue3";
+import Select from "@/Components/Select.vue";
+import {watch} from "vue";
 
-const props = defineProps(['show'])
+const props = defineProps(['show', 'categorise'])
 const emit = defineEmits(['close'])
 
 const form = useForm({
-    name : '',
+    name: '',
     details: '',
     highlights: '',
-    link:''
+    link: '',
+    category_id: ''
 });
 
-const savePost = () =>{
+const savePost = () => {
     form.post(route('exercises.store'))
+    closeModal()
+}
+
+const closeModal = () => {
+    form.reset()
     emit('close')
 }
 
