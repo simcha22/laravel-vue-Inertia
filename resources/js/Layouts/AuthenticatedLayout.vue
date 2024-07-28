@@ -54,6 +54,9 @@ onMounted(() => {
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
+                                <NavLink :href="route('timer')" :active="route().current('timer')">
+                                    Timer
+                                </NavLink>
                                 <NavLink v-if="can('post.viewAny')" :href="route('posts.index')" :active="route().current('posts.*')">
                                     Blog Post
                                 </NavLink>
