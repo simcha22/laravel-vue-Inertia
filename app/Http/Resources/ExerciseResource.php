@@ -20,6 +20,7 @@ class ExerciseResource extends JsonResource
             'details' => $this->details,
             'highlights' => $this->highlights,
             'link' => $this->link,
+            'category' => $this->category,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

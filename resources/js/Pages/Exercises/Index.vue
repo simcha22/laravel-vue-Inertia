@@ -14,10 +14,12 @@ const selectedExercise = ref({})
 const closeModal = () => {
     showCreateExercise.value = false
     showExerciseView.value = false
+    selectedExercise.value = {}
 }
 
-const showExercise = (id) =>{
-
+const showExercise = (exercise) =>{
+    selectedExercise.value = exercise
+    showExerciseView.value = true
 }
 
 </script>

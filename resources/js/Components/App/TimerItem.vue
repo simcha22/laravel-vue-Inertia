@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center">
-        <button type="button" @click="startTimer"
+        <button type="button" @click="startTimer" v-if="!is_timer_play"
                 class="flex items-center text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor" class="size-5">
@@ -9,7 +9,7 @@
             </svg>
             <span class="ml-1">Start</span>
         </button>
-        <button type="button" @click="stopTimer"
+        <button type="button" @click="stopTimer" v-if="is_timer_play"
                 class=" flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor" class="size-5">
@@ -19,7 +19,7 @@
             <span class="ml-1">Stop</span>
         </button>
 
-        <button type="button" @click="restartTimer"
+        <button type="button" @click="restartTimer" v-if="!is_timer_play"
                 class=" flex items-center text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor" class="size-5">
@@ -33,12 +33,6 @@
         <p class="text-center">Time camp = {{ time }} minutes</p>
     </div>
     <div class="flex items-center justify-center h-96">
-<!--        <div class="relative">-->
-<!--            <div class="w-40 h-40 rounded-full border-4 border-gray-300 flex items-center justify-center">-->
-<!--                <div class="absolute text-2xl font-bold" ref="timerDisplay">{{ formatTime }}</div>-->
-<!--            </div>-->
-<!--            <div class="w-40 h-40 rounded-full border-4 border-blue-500 absolute top-0 left-0 animate-spin-slow"></div>-->
-<!--        </div>-->
 
         <!-- Circular Progress -->
         <div class="relative size-40">
@@ -46,12 +40,12 @@
                 <!-- Background Circle -->
                 <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-gray-200 dark:text-neutral-700" stroke-width="2"></circle>
                 <!-- Progress Circle -->
-                <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-blue-600 dark:text-blue-500" stroke-width="2" stroke-dasharray="100" :stroke-dashoffset="progress" stroke-linecap="round"></circle>
+                <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-emerald-600 dark:text-blue-500" stroke-width="1" stroke-dasharray="100" :stroke-dashoffset="progress" stroke-linecap="round"></circle>
             </svg>
 
             <!-- Percentage Text -->
             <div class="absolute top-1/2 start-1/2 transform -translate-y-1/2 -translate-x-1/2">
-                <span class="text-center text-2xl font-bold text-blue-600 dark:text-blue-500">{{ formatTime }}</span>
+                <span class="text-center text-2xl font-bold text-emerald-600 dark:text-blue-500">{{ formatTime }}</span>
             </div>
         </div>
         <!-- End Circular Progress -->
@@ -67,7 +61,7 @@ const props = defineProps(['time'])
 const seconds = ref(0)
 const minutes = ref(0)
 const timer = ref(null)
-
+const is_timer_play = ref(false)
 const progress = ref(100)
 
 
@@ -78,40 +72,48 @@ const formatTime = computed(() => {
 })
 
 const startTimer = () => {
-    timer.value = setInterval(() => {
-        let timeCamp = props.time.split(':')
+    if(!is_timer_play.value) {
+        timer.value = setInterval(() => {
+            let timeCamp = props.time.split(':')
 
-        if (minutes.value == timeCamp[0] && seconds.value == timeCamp[1]) {
-            stopTimer()
-            return;
-        }
+            if (minutes.value == timeCamp[0] && seconds.value == timeCamp[1]) {
+                stopTimer()
+                return;
+            }
 
-        seconds.value++;
-        let secondsTime = parseInt(timeCamp[0] * 60) + parseInt(timeCamp[1])
+            is_timer_play.value = true
+            seconds.value++;
+            let secondsTime = parseInt(timeCamp[0] * 60) + parseInt(timeCamp[1])
 
-        progress.value = progress.value - (100/secondsTime)
+            progress.value = progress.value - (100 / secondsTime)
 
-        if (seconds.value === 60) {
-            seconds.value = 0;
-            minutes.value++;
-            progress.value = 0
-        }
+            if (seconds.value === 60) {
+                seconds.value = 0;
+                minutes.value++;
+            }
 
-    }, 1000);
+        }, 1000);
+    }
 }
 
 const stopTimer = () => {
-    clearInterval(timer.value);
+    if(is_timer_play.value) {
+        is_timer_play.value = false
+        clearInterval(timer.value);
+    }
 }
 
 const restartTimer = () => {
-    clearInterval(timer.value);
+    if(!is_timer_play.value) {
+        clearInterval(timer.value);
 
-    seconds.value = 0
-    minutes.value = 0
-    timer.value = null
+        seconds.value = 0
+        minutes.value = 0
+        timer.value = null
+        progress.value = 100
 
-    startTimer()
+        startTimer()
+    }
 }
 </script>
 
