@@ -3,13 +3,14 @@ const props = defineProps(['category'])
 </script>
 
 <template>
-    <li class="mb-8 ms-4">
-        <div
-            class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+    <li class="mb-10 ms-8">
+        <span class="absolute flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-800 dark:bg-blue-900">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-emerald-800 dark:text-blue-300 lucide lucide-dumbbell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.4 14.4 9.6 9.6"/><path d="M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l-1.768 1.767a2 2 0 1 1 2.828 2.829z"/><path d="m21.5 21.5-1.4-1.4"/><path d="M3.9 3.9 2.5 2.5"/><path d="M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z"/></svg>
+        </span>
         <div class="mb-1 text-lg font-normal leading-none text-emerald-500 dark:text-gray-500">
             {{ category.name }}
         </div>
-        <div v-for="exercise in category.exercises" class="mb-4">
+        <div v-for="exercise in category.exercises" class="mb-4 border-b-2 border-b-emerald-200">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ exercise.name }}</h3>
             <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">{{ exercise.details }}</p>
             <div class="mb-4">
@@ -35,7 +36,7 @@ const props = defineProps(['category'])
                     </svg>
                 </a>
             </div>
-            <hr>
+
         </div>
     </li>
 </template>
