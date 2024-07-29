@@ -1,7 +1,7 @@
 <template>
     <Modal :show="show" @close="closeModal" side="right">
         <div class="p-6">
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+            <h2 class="m-2 text-lg font-medium text-gray-900 dark:text-gray-100">
                  {{exercise.name}}
             </h2>
             <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">{{exercise.category.name}}</span>

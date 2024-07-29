@@ -60,7 +60,8 @@ class ExerciseController extends Controller
      */
     public function update(UpdateExerciseRequest $request, Exercise $exercise)
     {
-        //
+        $exercise->update($request->validated());
+        return Redirect::route('exercises.index');
     }
 
     /**
