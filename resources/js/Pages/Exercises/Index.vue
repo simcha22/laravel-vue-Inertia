@@ -5,21 +5,29 @@ import {ref} from "vue";
 import CreateModal from "@/Pages/Exercises/Components/CreateModal.vue";
 import CategoryItem from "@/Pages/Exercises/Components/CategoryItem.vue";
 import ShowModal from "@/Pages/Exercises/Components/ShowModal.vue";
+import EditModal from "@/Pages/Exercises/Components/EditModal.vue";
 
 const props = defineProps(['categorise'])
 const showCreateExercise = ref(false)
 const showExerciseView = ref(false)
 const selectedExercise = ref({})
+const showExerciseEdit = ref(false)
 
 const closeModal = () => {
     showCreateExercise.value = false
     showExerciseView.value = false
+    showExerciseEdit.value = false
     selectedExercise.value = {}
 }
 
 const showExercise = (exercise) =>{
     selectedExercise.value = exercise
     showExerciseView.value = true
+}
+
+const showEdit = (exercise) => {
+    showExerciseEdit.value = true
+    selectedExercise.value = exercise
 }
 
 </script>
@@ -42,7 +50,7 @@ const showExercise = (exercise) =>{
                     <div class="p-6 text-gray-900 dark:text-gray-100">
 
                         <ol class="relative border-s border-emerald-200 dark:border-gray-700">
-                            <CategoryItem v-for="category in categorise" :category="category" @clickOnShow="showExercise"/>
+                            <CategoryItem v-for="category in categorise" :category="category" @clickOnShow="showExercise" @clickOnEdit="showEdit"/>
                         </ol>
                     </div>
                 </div>
@@ -50,6 +58,7 @@ const showExercise = (exercise) =>{
         </div>
 
         <CreateModal :show="showCreateExercise" @close="closeModal" :categorise="categorise"/>
+        <EditModal :show="showExerciseEdit" :exercise="selectedExercise" :categorise="categorise" @close="closeModal"/>
         <ShowModal :show="showExerciseView" @close="closeModal" :exercise="selectedExercise"/>
     </AuthenticatedLayout>
 </template>
