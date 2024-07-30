@@ -21,14 +21,21 @@
         </div>
 
         {{exercise}}
+
+        <PsrModal :show="showAddResults" @close="closeModel"/>
     </AuthenticatedLayout>
 </template>
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {Head} from "@inertiajs/vue3";
 import {ref} from "vue";
+import PsrModal from "@/Pages/Results/Components/PsrModal.vue";
 
 const props = defineProps(['exercise'])
 const showAddResults = ref(false)
+
+const closeModel = () =>{
+    showAddResults.value = false
+}
 
 </script>
