@@ -2,6 +2,7 @@
 import {defineEmits} from 'vue'
 const props = defineProps(['category'])
 const emit = defineEmits(['clickOnShow', 'clickOnEdit'])
+import {Link} from "@inertiajs/vue3";
 </script>
 
 <template>
@@ -16,7 +17,7 @@ const emit = defineEmits(['clickOnShow', 'clickOnEdit'])
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ exercise.name }}</h3>
             <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">{{ exercise.details }}</p>
             <div class="mb-4">
-                <a href="#"
+                <Link :href="route('results.index', exercise.id)"
                    class="inline-flex items-center mr-2 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-emerald-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">Your
                     personal PRs
                     <svg class="w-3 h-3 ms-2 rtl:rotate-180 lucide lucide-biceps-flexed"
@@ -27,7 +28,7 @@ const emit = defineEmits(['clickOnShow', 'clickOnEdit'])
                         <path d="M15 14a5 5 0 0 0-7.584 2"/>
                         <path d="M9.964 6.825C8.019 7.977 9.5 13 8 15"/>
                     </svg>
-                </a>
+                </Link>
                 <button @click="emit('clickOnShow', exercise)"
                    class="inline-flex items-center mr-2 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-emerald-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">Learn
                     more

@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             ExerciseSeeder::class,
             PermissionSeeder::class,
             RoleSeeder::class,
+            ResultSeeder::class,
         ]);
 
         $user->roles()->attach(1);

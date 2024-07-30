@@ -7,11 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ExerciseResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
+    public static $wrap = false;
     public function toArray(Request $request): array
     {
         return [
@@ -20,6 +16,7 @@ class ExerciseResource extends JsonResource
             'details' => $this->details,
             'highlights' => $this->highlights,
             'link' => $this->link,
+            'results' => ResultResource::collection($this->results),
             'category' => $this->category,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
