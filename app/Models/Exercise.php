@@ -12,6 +12,7 @@ class Exercise extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'name',
         'details',
         'highlights',

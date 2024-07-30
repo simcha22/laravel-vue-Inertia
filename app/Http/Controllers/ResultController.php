@@ -4,16 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResultRequest;
 use App\Http\Requests\UpdateResultRequest;
+use App\Http\Resources\ExerciseResource;
+use App\Models\Exercise;
 use App\Models\Result;
+use Illuminate\Database\Eloquent\Builder;
+use Inertia\Inertia;
 
 class ResultController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Exercise $exercise)
     {
-        //
+        $exercise = Exercise::with(['results' => function ($query) {
+            $query->where('user_id', auth()->id());
+        }])->where('id','=', $exercise->id)->get();
+
+        return Inertia::render('Results/Index', ['exercise' => ExerciseResource::collection($exercise)]);
     }
 
     /**

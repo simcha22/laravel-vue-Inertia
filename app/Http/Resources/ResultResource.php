@@ -7,13 +7,17 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ResultResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
+    public static $wrap = false;
+
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'reps_type' => $this->reps_type,
+            'rehearsals' => explode('#',$this->rehearsals),
+            'weights' => explode('#',$this->weights),
+            'rounds' => $this->rounds,
+            'done_at'  => $this->done_at,
+            'meta' => $this->meta,
+        ];
     }
 }

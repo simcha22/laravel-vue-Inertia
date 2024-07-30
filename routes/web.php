@@ -4,6 +4,7 @@ use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\WorkoutController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/workouts', WorkoutController::class);
     Route::resource('/exercises', ExerciseController::class);
+
+    Route::resource('/exercises/{exercise}/results', ResultController::class);
 });
 
 require __DIR__.'/auth.php';
