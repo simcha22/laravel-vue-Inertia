@@ -12,9 +12,15 @@ export default {
 
     theme: {
         extend: {
+            // fontFamily: {
+            //     sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+            // },
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Comic Neue','sans-serif'],
             },
+            // fontFamily: {
+            //     sans: ['OHAviyaGenut', 'sans-serif'],
+            // },
         },
     },
 

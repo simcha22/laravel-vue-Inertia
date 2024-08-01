@@ -15,6 +15,7 @@ class Result extends Model
         'rehearsals',
         'weights',
         'rounds',
+        'percentage',
         'done_at',
         'user_id',
         'exercise_id',
