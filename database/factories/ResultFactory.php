@@ -22,6 +22,7 @@ class ResultFactory extends Factory
             'reps_type' => $this->faker->randomElement(['constant','variable']),
             'rehearsals' => $this->faker->randomElement(['8#8#6#4#2#2', '10#8#6#4#2#1', '5#4#3#1#1#1']),
             'weights' => $this->faker->randomElement(['50#55#60#65#70#75', '60#65#70#75#80#85', '70#75#80#85#90#95']),
+            'percentage' => $this->faker->randomElement(['50#55#60#65#70#75', '60#65#70#75#80#85', '70#75#80#85#90#95']),
             'rounds' => 6,
             'user_id' => $this->faker->randomElement(User::pluck('id')->toArray()),
             'exercise_id' => $this->faker->randomElement(Exercise::pluck('id')->toArray()),
