@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('path',255);
             $table->string('mime',255);
             $table->integer('size');
-            $table->unsignedBigInteger('attachmentable_id');
-            $table->string('attachmentable_type');
+            $table->morphs('attachmentable');
             $table->timestamps();
         });
     }

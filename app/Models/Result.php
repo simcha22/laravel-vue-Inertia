@@ -12,10 +12,12 @@ class Result extends Model
 
     protected $fillable = [
         'reps_type',
+        'level',
         'rehearsals',
         'weights',
         'rounds',
         'percentage',
+        'notes',
         'done_at',
         'user_id',
         'exercise_id',

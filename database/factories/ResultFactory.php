@@ -20,6 +20,7 @@ class ResultFactory extends Factory
     {
         return [
             'reps_type' => $this->faker->randomElement(['constant','variable']),
+            'level' => $this->faker->randomElement(['rx', 'scaled']),
             'rehearsals' => $this->faker->randomElement(['8#8#6#4#2#2', '10#8#6#4#2#1', '5#4#3#1#1#1']),
             'weights' => $this->faker->randomElement(['50#55#60#65#70#75', '60#65#70#75#80#85', '70#75#80#85#90#95']),
             'percentage' => $this->faker->randomElement(['50#55#60#65#70#75', '60#65#70#75#80#85', '70#75#80#85#90#95']),

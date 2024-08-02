@@ -14,12 +14,14 @@ return new class extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
-            $table->string('reps_type');
+            $table->enum('reps_type', ['constant','variable']);
+            $table->enum('level', ['rx', 'scaled']);
             $table->string('rehearsals');
             $table->string('weights');
             $table->integer('rounds');
             $table->string('percentage')->nullable();
             $table->timestamp('done_at')->default(Carbon::now());
+            $table->longText('notes')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('exercise_id')->constrained('exercises');
             $table->json('meta')->nullable();

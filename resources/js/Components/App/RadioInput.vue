@@ -8,7 +8,7 @@
                     {{item}}
                   </span>
                 <input v-model="model" :value="item"
-                       ref="input" :id="'toggle-count-' + item" name="toggle-count" type="radio"
+                       ref="input" :id="'toggle-count-' + item" :name="'toggle-count' + name" type="radio"
                        class="absolute top-0 end-0 size-full border-transparent bg-transparent bg-none text-transparent rounded-lg cursor-pointer before:absolute before:inset-0 before:size-full before:rounded-lg focus:ring-offset-0 checked:before:bg-white checked:before:shadow-sm checked:bg-none focus:ring-transparent dark:checked:before:bg-neutral-800 dark:focus:ring-offset-transparent">
             </label>
         </div>
@@ -18,7 +18,7 @@
 <script setup>
 import {ref} from "vue";
 
-const props = defineProps(['items'])
+const props = defineProps(['items', 'name'])
 const model = defineModel({
     type: String,
     required: true,
