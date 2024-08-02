@@ -13,6 +13,14 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory(20)->create();
+        Category::create(['name' => 'squats']);
+        Category::create(['name' => 'cleans']);
+        Category::create(['name' => 'presses']);
+        Category::create(['name' => 'jerks']);
+        Category::create(['name' => 'snatches']);
+        Category::create(['name' => 'deadlifts']);
+        Category::create(['name' => 'olimpic lifts']);
+        Category::create(['name' => 'other']);
+
     }
 }

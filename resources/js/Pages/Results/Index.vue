@@ -22,7 +22,7 @@
 
         {{exercise}}
 
-        <PsrModal :show="showAddResults" @close="closeModel"/>
+        <PsrModal :show="showAddResults" @close="closeModel" :exercise="exercise"/>
     </AuthenticatedLayout>
 </template>
 <script setup>

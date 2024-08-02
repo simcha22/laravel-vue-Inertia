@@ -15,6 +15,8 @@ class ResultResource extends JsonResource
             'reps_type' => $this->reps_type,
             'rehearsals' => explode('#',$this->rehearsals),
             'weights' => explode('#',$this->weights),
+            'percentage' => explode('#',$this->percentage),
+            'notes' => $this->notes,
             'rounds' => $this->rounds,
             'done_at'  => $this->done_at,
             'meta' => $this->meta,

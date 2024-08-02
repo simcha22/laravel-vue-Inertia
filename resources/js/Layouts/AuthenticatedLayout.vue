@@ -153,8 +153,17 @@ onMounted(() => {
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('timer')" :active="route().current('timer')">
+                            Timer
+                        </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('exercises.index')" :active="route().current('exercises.*')">
                             Exercises
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('workouts.index')" :active="route().current('workouts.*')">
+                            Workout
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('users.index')" :active="route().current('users.*')">
+                            Users
                         </ResponsiveNavLink>
                     </div>
 
