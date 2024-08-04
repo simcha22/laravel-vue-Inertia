@@ -7,14 +7,11 @@ use App\Http\Requests\UpdateResultRequest;
 use App\Http\Resources\ExerciseResource;
 use App\Models\Exercise;
 use App\Models\Result;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class ResultController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Exercise $exercise)
     {
         $exercise = Exercise::with(['results' => function ($query) {
@@ -35,9 +32,26 @@ class ResultController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreResultRequest $request)
+    public function store(StoreResultRequest $request, Exercise $exercise)
     {
-        //
+        $data = $request->validated();
+
+        Result::create([
+            'user_id' => auth()->id(),
+            'exercise_id' => $exercise->id,
+            'reps_type' => $data['type'],
+            'level' => $data['level'],
+            'rehearsals' => collect($data['weight'])->pluck('reps')->implode('#') ,
+            'weights'=> collect($data['weight'])->pluck('value')->implode('#'),
+            'rounds' => $data['sets'],
+            'percentage' => collect($data['weight'])->pluck('percent')->implode('#'),
+            'notes' => $data['notes'] ?? null ,
+            'done_at' => $data['done_at'],
+            'meta' => json_encode($data['weight']),
+        ]);
+
+        return Redirect::route('results.index', $exercise)
+            ->with('message', 'psr create successfully.');
     }
 
     /**
