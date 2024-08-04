@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreResultRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreResultRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,16 @@ class StoreResultRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'sets' => 'required|numeric|between:5,20',
+            'reps' =>  'required|numeric|between:5,20',
+            'type' => ['required', Rule::in(['constant','variable'])],
+            'level' => ['required', Rule::in(['rx', 'scaled'])],
+            'weight' => 'required|array',
+            'weight.*' => 'required|array',
+            'done_at' => 'required|date',
+            'weight.*.reps' =>  'required|numeric|between:5,20',
+            'weight.*.value' =>  'required|numeric|between:5,350',
+            'weight.*.percent' =>  'required|numeric|between:5,105',
         ];
     }
 }

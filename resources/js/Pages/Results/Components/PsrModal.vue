@@ -8,19 +8,19 @@
                 <div class="flex justify-center">
                     <div class="mr-2  w-1/2 text-center">
                         <InputLabel for="sets" value="Sets"/>
-                        <InputNumber id="sets" v-model="form.sets"/>
+                        <InputNumber id="sets" v-model="form.sets" minValue="5" maxValue="10" stepValue="1"/>
                     </div>
                     <div class="mr-2 w-1/2 text-center" v-if="form.type === 'constant'">
                         <InputLabel for="reps" value="Reps"/>
-                        <InputNumber id="reps" v-model="form.reps"/>
+                        <InputNumber id="reps" v-model="form.reps" minValue="1" maxValue="20" stepValue="1"/>
                     </div>
                 </div>
                 <div>
                     <InputLabel for="weight" value="Weight"/>
                     <div v-for="weight in form.weight" class="flex mb-3">
-                        <InputGroup :number="weight.number" :reps="weight.reps"/>
-                        <InputNumber v-if="form.type === 'variable'" id="reps" v-model="weight.reps" value="reps"/>
-                        <InputNumber id="percent" v-model="weight.percent" value="%" max="100" min="50"/>
+                        <InputGroup v-model="weight.value" :number="weight.number" :reps="form.type === 'constant' ? weight.reps + ' reps' : ''"/>
+                        <InputNumber v-if="form.type === 'variable'" id="reps" v-model="weight.reps" minValue="1" maxValue="20" value="reps" stepValue="1"/>
+                        <InputNumber id="percent" v-model="weight.percent" value="%" minValue="50" maxValue="105" stepValue="5"/>
                         <!--<TextInput v-model="weight.percent" placeholder="percent"/> -->
                     </div>
                 </div>
@@ -34,7 +34,6 @@
                         id="notes"
                         class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                         v-model="form.notes"
-                        required
                         autocomplete="notes"
                     ></textarea>
 
@@ -83,7 +82,7 @@ import {useForm} from "@inertiajs/vue3";
 import InputLabel from "@/Components/InputLabel.vue";
 import RadioInput from "@/Components/App/RadioInput.vue";
 import InputGroup from "@/Components/App/InputGroup.vue";
-import {onMounted, watch} from "vue";
+import {onMounted, watch, ref} from "vue";
 import InputError from "@/Components/InputError.vue";
 import TextInput from "@/Components/TextInput.vue";
 import SaveButton from "@/Components/SaveButton.vue";
@@ -99,17 +98,33 @@ const form = useForm({
     level: 'rx',
     weight: [],
     notes: '',
-    done_at: '',
-    exercise_id: props.exercise.id
+    done_at: ''
 })
+
+const totalWeight = ref('')
+const totalReps = ref('')
+const totalPercent = ref('')
+
+const getCurrentDateTime = ()  => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+
+    form.done_at =  `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
 const closeModal = () => {
     emit('close')
 }
 onMounted(() => {
     changeSets(5)
+    getCurrentDateTime()
 })
 const savePost = () => {
-
+    form.post(route('results.store', props.exercise))
 }
 
 watch(() => form.type, (newValue, oldValue) => {
@@ -125,25 +140,26 @@ watch(() =>form.reps, (newValue, oldValue) => {
         form.weight.map(item => item.reps = newValue)
     }
 })
+
 const changeSets = (value) => {
     if (form.type === 'constant') {
         form.weight = []; // Clear previous objects
         for (let i = 0; i < value; i++) {
             form.weight.push({
-                number: `${i + 1}`,
-                reps: `${form.reps}`,
+                number: i + 1,
+                reps: form.reps,
                 value: '',
-                percent: '',
+                percent: 100,
             });
         }
     } else if (form.type === 'variable') {
         form.weight = []; // Clear previous objects
         for (let i = 0; i < value; i++) {
             form.weight.push({
-                number: `${i + 1}`,
-                reps: ``,
+                number: i + 1,
+                reps: 0,
                 value: '',
-                percent: '',
+                percent: 100,
             });
         }
     }
