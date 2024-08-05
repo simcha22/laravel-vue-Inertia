@@ -1,7 +1,11 @@
 <template>
     <Modal :show="show" @close="closeModal" side="center">
         <div class="p-6">
-            <form @submit.prevent="savePost" class="space-y-6">
+
+            <div class="flex justify-between items-center">
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"> {{exercise[0].name}}</h2>
+            </div>
+            <form @submit.prevent="savePost" class="space-y-6 mt-4">
                 <div>
                     <RadioInput v-model="form.type" :items="['constant','variable']" name="type"/>
                 </div>

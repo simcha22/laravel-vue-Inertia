@@ -7,18 +7,25 @@ use App\Http\Requests\UpdateResultRequest;
 use App\Http\Resources\ExerciseResource;
 use App\Models\Exercise;
 use App\Models\Result;
+use App\Services\ResultService;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class ResultController extends Controller
 {
+    public function __construct(public ResultService $resultService){}
+
     public function index(Exercise $exercise)
     {
+        $this->resultService->getCardWeights($exercise->id);
         $exercise = Exercise::with(['results' => function ($query) {
             $query->where('user_id', auth()->id());
         }])->where('id','=', $exercise->id)->get();
 
-        return Inertia::render('Results/Index', ['exercise' => ExerciseResource::collection($exercise)]);
+        return Inertia::render('Results/Index', [
+            'exercise' => ExerciseResource::collection($exercise),
+            'cards' => $this->resultService->card,
+        ]);
     }
 
     /**
