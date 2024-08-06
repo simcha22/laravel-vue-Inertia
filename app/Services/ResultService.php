@@ -17,7 +17,7 @@ class ResultService{
             ->first();
 
         if (!$lastRecord) {
-            return null;
+            return;
         }
 
         $currentWeights = explode('#', $lastRecord->weights);
