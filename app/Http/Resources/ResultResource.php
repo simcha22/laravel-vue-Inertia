@@ -13,9 +13,13 @@ class ResultResource extends JsonResource
     {
         return [
             'reps_type' => $this->reps_type,
+            'level' => $this->level,
             'rehearsals' => explode('#',$this->rehearsals),
             'weights' => explode('#',$this->weights),
             'percentage' => explode('#',$this->percentage),
+            'weights_text' => str_replace( '#', 'k, ', $this->weights) .'k',
+            'percentage_text' => str_replace( '#', '%, ', $this->percentage) .'%',
+            'rehearsals_text' => str_replace( '#', ', ', $this->rehearsals),
             'notes' => $this->notes,
             'rounds' => $this->rounds,
             'done_at'  => $this->done_at,

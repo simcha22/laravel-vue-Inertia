@@ -24,7 +24,7 @@ class ResultController extends Controller
 
         return Inertia::render('Results/Index', [
             'exercise' => ExerciseResource::collection($exercise),
-            'cards' => $this->resultService->card,
+            'cards' => $this->resultService->card ?? null,
         ]);
     }
 

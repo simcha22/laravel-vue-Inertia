@@ -3,17 +3,17 @@
         <div class="space-y-2">
             <div
                 class="flex items-center space-x-2 rtl:space-x-reverse text-sm font-medium text-gray-500 dark:text-gray-400">
-                <span>{{header}}</span>
+                <span>{{card.header}}</span>
             </div>
 
             <div class="text-3xl dark:text-gray-100">
-                {{value}}
+                {{card.value}}
             </div>
 
-            <div v-if="status === 'increase'"
+            <div v-if="card.status === 'increase'"
                 class="flex items-center space-x-1 rtl:space-x-reverse text-sm font-medium text-green-600">
 
-                <span>{{percent}} {{status}}</span>
+                <span>{{card.percent}} {{card.status}}</span>
 
                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                      fill="currentColor"
@@ -24,11 +24,10 @@
                 </svg>
             </div>
 
-
-            <div v-else-if="status === 'decrease'"
+            <div v-else-if="card.status === 'decrease'"
                 class="flex items-center space-x-1 rtl:space-x-reverse text-sm font-medium text-red-600">
 
-                <span>{{percent}} {{status}}</span>
+                <span>{{card.percent}} {{card.status}}</span>
 
                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                      fill="currentColor"
@@ -44,18 +43,5 @@
 </template>
 
 <script setup>
-const props = defineProps({
-    header: {
-        type: String,
-    },
-    value: {
-        type: String,
-    },
-    status:{
-        type: String,
-    },
-    percent:{
-        type: String,
-    }
-})
+const props = defineProps(['card'])
 </script>
