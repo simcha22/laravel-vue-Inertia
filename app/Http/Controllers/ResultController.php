@@ -88,8 +88,12 @@ class ResultController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Result $result)
+    public function destroy(Exercise $exercise, Result $result)
     {
-        //
+        $result->delete();
+
+        return Redirect::route('results.index', $exercise)
+            ->with('message', 'psr delete successfully.');
+
     }
 }

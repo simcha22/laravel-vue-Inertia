@@ -12,6 +12,7 @@ class ResultResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'reps_type' => $this->reps_type,
             'level' => $this->level,
             'rehearsals' => explode('#',$this->rehearsals),
