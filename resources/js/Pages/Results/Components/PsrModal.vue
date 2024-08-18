@@ -3,7 +3,8 @@
         <div class="p-6">
 
             <div class="flex justify-between items-center">
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"> {{exercise[0].name}}</h2>
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                    {{ exercise[0].name }}</h2>
             </div>
             <form @submit.prevent="savePost" class="space-y-6 mt-4">
                 <div>
@@ -22,9 +23,12 @@
                 <div>
                     <InputLabel for="weight" value="Weight"/>
                     <div v-for="weight in form.weight" class="flex mb-3">
-                        <InputGroup v-model="weight.value" :number="weight.number" :reps="form.type === 'constant' ? weight.reps + ' reps' : ''"/>
-                        <InputNumber v-if="form.type === 'variable'" id="reps" v-model="weight.reps" minValue="1" maxValue="20" value="reps" stepValue="1"/>
-                        <InputNumber id="percent" v-model="weight.percent" value="%" minValue="50" maxValue="105" stepValue="5"/>
+                        <InputGroup v-model="weight.value" :number="weight.number"
+                                    :reps="form.type === 'constant' ? weight.reps + ' reps' : ''"/>
+                        <InputNumber v-if="form.type === 'variable'" id="reps" v-model="weight.reps" minValue="1"
+                                     maxValue="20" value="reps" stepValue="1"/>
+                        <InputNumber id="percent" v-model="weight.percent" value="%" minValue="50" maxValue="105"
+                                     stepValue="5"/>
                         <!--<TextInput v-model="weight.percent" placeholder="percent"/> -->
                     </div>
                 </div>
@@ -45,7 +49,7 @@
                 </div>
 
                 <div>
-                    <InputLabel for="done_at" value="Done at" />
+                    <InputLabel for="done_at" value="Done at"/>
 
                     <TextInput
                         id="done_at"
@@ -57,7 +61,7 @@
                         autocomplete="done_at"
                     />
 
-                    <InputError class="mt-2" :message="form.errors.done_at" />
+                    <InputError class="mt-2" :message="form.errors.done_at"/>
                 </div>
 
                 <div class="mt-6 flex justify-end">
@@ -92,7 +96,7 @@ import TextInput from "@/Components/TextInput.vue";
 import SaveButton from "@/Components/SaveButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
-const props = defineProps(['show', 'exercise'])
+const props = defineProps(['show', 'exercise', 'result'])
 const emit = defineEmits(['close'])
 
 const form = useForm({
@@ -105,30 +109,46 @@ const form = useForm({
     done_at: ''
 })
 
-const totalWeight = ref('')
-const totalReps = ref('')
-const totalPercent = ref('')
-
-const getCurrentDateTime = ()  => {
+const getCurrentDateTime = () => {
     const now = new Date();
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, '0');
     const day = String(now.getDate()).padStart(2, '0');
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
-
-    form.done_at =  `${year}-${month}-${day}T${hours}:${minutes}`;
+    form.done_at = `${year}-${month}-${day}T${hours}:${minutes}`;
 }
 
 const closeModal = () => {
     emit('close')
 }
 onMounted(() => {
-    changeSets(5)
+    //changeSets(5)
     getCurrentDateTime()
 })
+
+watch(props, (value) => {
+    console.log(props.result)
+    if (props.result.id) {
+        form.sets = props.result.rounds
+        form.reps = 5
+        form.type = props.result.reps_type
+        form.level = props.result.level
+        form.weight = props.result.meta
+    }else{
+        form.sets = 5
+        form.reps = 5
+        form.type = 'constant'
+        form.level = 'rx'
+        form.weight = []
+
+        changeSets(5)
+    }
+})
+
 const savePost = () => {
     form.post(route('results.store', props.exercise))
+    closeModal()
 }
 
 watch(() => form.type, (newValue, oldValue) => {
@@ -139,7 +159,7 @@ watch(() => form.sets, (newValue, oldValue) => {
     changeSets(newValue)
 });
 
-watch(() =>form.reps, (newValue, oldValue) => {
+watch(() => form.reps, (newValue, oldValue) => {
     if (form.type === 'constant') {
         form.weight.map(item => item.reps = newValue)
     }

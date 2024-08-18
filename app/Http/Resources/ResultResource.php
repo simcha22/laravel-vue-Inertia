@@ -24,7 +24,7 @@ class ResultResource extends JsonResource
             'notes' => $this->notes,
             'rounds' => $this->rounds,
             'done_at'  => $this->done_at,
-            'meta' => $this->meta,
+            'meta' => json_decode($this->meta),
         ];
     }
 }
