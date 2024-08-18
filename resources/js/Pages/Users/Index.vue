@@ -12,6 +12,7 @@ const confirmingUserDeletion = ref(false)
 const userToDelete = ref(null)
 
 const {formatMessageDateLong} = useTime()
+
 const deleteUser = () => {
     router.delete(route('users.destroy', userToDelete.value))
     closeModal()
