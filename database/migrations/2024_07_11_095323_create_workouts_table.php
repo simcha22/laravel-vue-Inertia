@@ -17,6 +17,8 @@ return new class extends Migration
             $table->longText('content');
             $table->foreignId('user_id')->constrained('users');
             $table->longText('score')->nullable();
+            $table->enum('score_type', ['time','reps'])->default('time');
+            $table->time('time')->nullable();
             $table->timestamp('done_at')->nullable();
             $table->foreignId('parent_id')->nullable()->constrained('workouts')->onDelete('cascade');
             $table->timestamps();

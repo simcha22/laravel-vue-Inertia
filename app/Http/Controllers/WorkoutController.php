@@ -46,7 +46,7 @@ class WorkoutController extends Controller
      */
     public function show(Workout $workout)
     {
-        $workout = Workout::with('user')->find($workout)->first();
+        $workout = Workout::with(['user'])->where('id', $workout->id)->first();
         return Inertia::render('Workouts/Show', ['workout' => new WorkoutResource($workout)]);
     }
 

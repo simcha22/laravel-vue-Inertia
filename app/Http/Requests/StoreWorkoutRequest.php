@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreWorkoutRequest extends FormRequest
 {
@@ -26,6 +27,8 @@ class StoreWorkoutRequest extends FormRequest
             'content' => ['required', 'string'],
             'score' => ['string'],
             'done_at' => ['date'],
+            'score_type' => ['required', Rule::in(['time','reps'])],
+            'time' => ['nullable', 'date_format:H:i'],
             //'files' => ['array'],
            // 'files.*' => ['file', 'mimes:jpg,jpeg,png', 'max:1024'],
         ];

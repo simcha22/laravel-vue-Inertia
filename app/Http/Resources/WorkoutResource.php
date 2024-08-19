@@ -16,8 +16,10 @@ class WorkoutResource extends JsonResource
             'content' => $this->content,
             'done_at' => $this->done_at,
             'score' => $this->score,
+            'score_type' => $this->score_type,
             'user' => $this->user,
             'id' => $this->id,
+            'time' => $this->time,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

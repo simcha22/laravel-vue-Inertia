@@ -18,7 +18,9 @@ class Workout extends Model
         'done_at',
         'parent_id',
         'score',
-        'user_id'
+        'user_id',
+        'score_type',
+        'time',
     ];
 
     public function user(): BelongsTo

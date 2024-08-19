@@ -67,6 +67,28 @@
 
                     <InputError class="mt-2" :message="form.errors.score" />
                 </div>
+
+                <div>
+                    <InputLabel for="score_type" value="Score type" />
+                    <RadioInput v-model="form.score_type" :items="['time','reps']" name="score_type"/>
+                </div>
+
+                <div>
+                    <InputLabel for="time" value="Time camp" />
+
+                    <TextInput
+                        id="time"
+                        type="time"
+                        class="mt-1 block w-full"
+                        v-model="form.time"
+                        required
+                        autofocus
+                        autocomplete="time"
+                    />
+
+                    <InputError class="mt-2" :message="form.errors.time" />
+                </div>
+
                 <div class="mt-6 flex justify-end">
 
                     <SaveButton :disabled="form.processing">Save</SaveButton>
@@ -97,6 +119,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import SaveButton from "@/Components/SaveButton.vue";
 import {useForm} from "@inertiajs/vue3";
+import RadioInput from "@/Components/App/RadioInput.vue";
 
 const props = defineProps(['show'])
 const emit = defineEmits(['close'])
@@ -106,6 +129,8 @@ const form = useForm({
     content: '',
     done_at: '',
     score: '',
+    time: '',
+    score_type: 'time'
 });
 
 const savePost = () =>{
