@@ -37,4 +37,9 @@ class Workout extends Model
     {
         return $this->hasMany(Workout::class, 'parent_id');
     }
+
+    public function exercises(): HasMany
+    {
+        return $this->hasMany(Exercise::class);
+    }
 }

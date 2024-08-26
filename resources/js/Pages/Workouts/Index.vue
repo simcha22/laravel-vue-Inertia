@@ -5,7 +5,7 @@ import {ref} from "vue";
 import WorkoutItem from "@/Pages/Workouts/Components/WorkoutItem.vue";
 import CreateModal from "@/Pages/Workouts/Components/CreateModal.vue";
 
-const props = defineProps(['workouts'])
+const props = defineProps(['workouts', 'exercises'])
 const showCreateWorkout = ref(false)
 
 const closeModal =() =>{
@@ -29,7 +29,6 @@ const closeModal =() =>{
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
-
                         <div class="relative overflow-x-auto">
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                 <WorkoutItem v-for="workout in workouts" :workout="workout"/>
@@ -40,6 +39,6 @@ const closeModal =() =>{
             </div>
         </div>
 
-        <CreateModal :show="showCreateWorkout" @close="closeModal"/>
+        <CreateModal :show="showCreateWorkout" @close="closeModal" :exercises="exercises"/>
     </AuthenticatedLayout>
 </template>
