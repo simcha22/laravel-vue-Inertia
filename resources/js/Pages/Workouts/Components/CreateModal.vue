@@ -67,6 +67,36 @@
 
                     <InputError class="mt-2" :message="form.errors.score" />
                 </div>
+
+                <div>
+                    <InputLabel for="score_type" value="Score type" />
+                    <RadioInput v-model="form.score_type" :items="['time','reps']" name="score_type"/>
+                </div>
+
+                <div>
+                    <InputLabel for="time" value="Time camp" />
+
+                    <TextInput
+                        id="time"
+                        type="time"
+                        class="mt-1 block w-full"
+                        v-model="form.time"
+                        required
+                        autofocus
+                        autocomplete="time"
+                    />
+
+                    <InputError class="mt-2" :message="form.errors.time" />
+                </div>
+
+                <div>
+                    <InputLabel for="exercises" value="Exercises" />
+
+                    <MultipleSelect class="mt-1 block w-full" :selectedOptions="form.exercises" @update="UpdateExercises" :items="exercises" placeholder="Select Exercise"/>
+
+                    <InputError class="mt-2" :message="form.errors.exercises" />
+                </div>
+
                 <div class="mt-6 flex justify-end">
 
                     <SaveButton :disabled="form.processing">Save</SaveButton>
@@ -91,14 +121,15 @@
 <script setup>
 import Modal from "@/Components/Modal.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import DangerButton from "@/Components/DangerButton.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import SaveButton from "@/Components/SaveButton.vue";
 import {useForm} from "@inertiajs/vue3";
+import RadioInput from "@/Components/App/RadioInput.vue";
+import MultipleSelect from "@/Components/MultipleSelect.vue";
 
-const props = defineProps(['show'])
+const props = defineProps(['show', 'exercises'])
 const emit = defineEmits(['close'])
 
 const form = useForm({
@@ -106,7 +137,18 @@ const form = useForm({
     content: '',
     done_at: '',
     score: '',
+    time: '',
+    score_type: 'time',
+    exercises: [1,4,9]
 });
+
+const UpdateExercises = (id) => {
+    if(form.exercises.includes(id)){
+        form.exercises = form.exercises.filter(num => num !== id);
+    }else{
+        form.exercises.push(id)
+    }
+}
 
 const savePost = () =>{
     form.post(route('workouts.store'))

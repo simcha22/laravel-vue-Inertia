@@ -15,7 +15,12 @@
                                 <p class="mt-2 text-gray-500 dark:text-neutral-400">
                                     {{ workout.content }}
                                 </p>
-
+                               <p class="mt-2 text-gray-500 dark:text-neutral-400">
+                                    Time Camp: {{ workout.time }}
+                                </p>
+                                <div class="mt-2">
+                                <span class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{workout.score_type}}</span>
+                                </div>
                                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
                                     <AttachmentItemView v-for="file in workout.attachments" :file="file" />
                                 </div>

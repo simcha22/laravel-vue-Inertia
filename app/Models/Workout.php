@@ -18,7 +18,9 @@ class Workout extends Model
         'done_at',
         'parent_id',
         'score',
-        'user_id'
+        'user_id',
+        'score_type',
+        'time',
     ];
 
     public function user(): BelongsTo
@@ -34,5 +36,10 @@ class Workout extends Model
     public function children(): HasMany
     {
         return $this->hasMany(Workout::class, 'parent_id');
+    }
+
+    public function exercises(): HasMany
+    {
+        return $this->hasMany(Exercise::class);
     }
 }

@@ -17,6 +17,8 @@ class ResultController extends Controller
 
     public function index(Exercise $exercise)
     {
+        //$this->resultService->calculateWeights($exercise->id);
+
         $this->resultService->getCardWeights($exercise->id);
         $exercise = Exercise::with(['results' => function ($query) {
             $query->where('user_id', auth()->id());

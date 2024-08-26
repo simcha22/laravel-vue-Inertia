@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Result;
 use Illuminate\Support\Facades\DB;
 
 class ResultService{
@@ -59,5 +60,25 @@ class ResultService{
             'percent' => $weightChange . 'k',
             'status' => ($currentHighestWeight >= $allHighestWeight) ? 'increase' : 'decrease',
         ];
+    }
+
+    public function calculateWeights($exerciseId)
+    {
+        $results = Result::where('user_id', auth()->id())
+            ->where('exercise_id', $exerciseId)
+            ->whereNotNull('meta')
+            ->pluck('meta');
+
+        $arrayResults = [];
+        $allWeightsOnReps = [];
+        foreach ($results as $result) {
+            $arrayResult = json_decode($result, true);
+            foreach($arrayResult as $item) {
+                $allWeightsOnReps[$item['reps']][] = $item['value'];
+                $allWeightsOnReps[$item['reps']] = array_unique($allWeightsOnReps[$item['reps']]);
+            }
+        }
+
+        dd($allWeightsOnReps);
     }
 }

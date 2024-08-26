@@ -128,7 +128,7 @@ onMounted(() => {
 })
 
 watch(props, (value) => {
-    console.log(props.result)
+
     if (props.result.id) {
         form.sets = props.result.rounds
         form.reps = 5
