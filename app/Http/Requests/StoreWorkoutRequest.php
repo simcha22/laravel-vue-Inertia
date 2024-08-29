@@ -29,8 +29,7 @@ class StoreWorkoutRequest extends FormRequest
             'done_at' => ['date'],
             'score_type' => ['required', Rule::in(['time','reps'])],
             'time' => ['nullable', 'date_format:H:i'],
-            //'files' => ['array'],
-           // 'files.*' => ['file', 'mimes:jpg,jpeg,png', 'max:1024'],
-        ];
+            'exercises' => ['nullable', 'array'],
+       ];
     }
 }

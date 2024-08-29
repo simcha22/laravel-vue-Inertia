@@ -58,5 +58,7 @@ import {Head} from "@inertiajs/vue3";
 
 
 const props = defineProps(['workout'])
+
+console.log(props.workout.exercises)
 const {formatMessageDateLong} = useTime()
 </script>
