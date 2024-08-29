@@ -139,7 +139,7 @@ const form = useForm({
     score: '',
     time: '',
     score_type: 'time',
-    exercises: [1,4,9]
+    exercises: []
 });
 
 const UpdateExercises = (id) => {

@@ -38,8 +38,11 @@ class WorkoutController extends Controller
         $data = $request->validated();
         $data['user_id'] = Auth::id();
 
+        //dd($data['exercises']);
         $workout = Workout::create($data);
+        $workout->exercises()->sync($data['exercises']);
 
+        //$workout->exercises()->attach();
         return redirect()->route('workouts.index');
     }
 
@@ -48,7 +51,7 @@ class WorkoutController extends Controller
      */
     public function show(Workout $workout)
     {
-        $workout = Workout::with(['user'])->where('id', $workout->id)->first();
+        $workout = Workout::with(['user', 'exercises'])->where('id', $workout->id)->first();
         return Inertia::render('Workouts/Show', ['workout' => new WorkoutResource($workout)]);
     }
 
