@@ -21,6 +21,12 @@
                                 <div class="mt-2">
                                 <span class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{workout.score_type}}</span>
                                 </div>
+
+                                <div class="mt-2">
+                                    <p class="mt-2 text-gray-500 dark:text-neutral-400">Exercises:</p>
+                                    <span v-for="exercise in workout.exercises" @click="showExercise(exercise)" class="cursor-pointer bg-indigo-100 text-indigo-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{exercise.name}}</span>
+                                </div>
+
                                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
                                     <AttachmentItemView v-for="file in workout.attachments" :file="file" />
                                 </div>
@@ -46,6 +52,7 @@
                 </div>
             </div>
         </div>
+        <ShowModal :show="showExerciseView" @close="closeModal" :exercise="selectedExercise"/>
 
     </AuthenticatedLayout>
 </template>
@@ -55,10 +62,22 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import AttachmentItemView from "@/Pages/Posts/Components/AttachmentItemView.vue";
 import useTime from "@/Composteble/time.js";
 import {Head} from "@inertiajs/vue3";
-
+import ShowModal from "@/Pages/Exercises/Components/ShowModal.vue";
+import {ref} from "vue";
 
 const props = defineProps(['workout'])
+const showExerciseView = ref(false)
+const selectedExercise = ref({})
 
-console.log(props.workout.exercises)
 const {formatMessageDateLong} = useTime()
+
+const showExercise = (exercise) =>{
+    selectedExercise.value = exercise
+    showExerciseView.value = true
+}
+
+const closeModal = () => {
+    showExerciseView.value = false
+    selectedExercise.value = {}
+}
 </script>
