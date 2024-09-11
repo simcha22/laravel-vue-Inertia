@@ -8,10 +8,12 @@ import {ref} from "vue";
 import useTime from "@/Composteble/time.js";
 
 const props = defineProps(['posts'])
+
 const confirmingPostDeletion = ref(false)
 const postToDelete = ref(null)
 
 const {formatMessageDateLong} = useTime()
+
 const deletePost = () => {
     router.delete(route('posts.destroy', postToDelete.value))
     closeModal()
@@ -66,7 +68,7 @@ const closeModal =() =>{
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody v-if="posts.le">
                                 <tr v-for="post in posts"
                                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
@@ -93,6 +95,9 @@ const closeModal =() =>{
                                         </button>
                                     </td>
                                 </tr>
+                                </tbody>
+                                <tbody v-else>
+                                <p> No posts found</p>
                                 </tbody>
                             </table>
                         </div>
