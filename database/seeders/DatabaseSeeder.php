@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             CategorySeeder::class,
-            PostSeeder::class,
-            CommentSeeder::class,
+            //PostSeeder::class,
+            //CommentSeeder::class,
             WorkoutSeeder::class,
             ExerciseSeeder::class,
             PermissionSeeder::class,

@@ -28,7 +28,7 @@
                                 </div>
 
                                 <div class="mt-4">
-                                    <button
+                                    <button @click="showCreateResultsModal = true"
                                           class="inline-flex items-center mr-2 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-emerald-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">Set Your results
                                         <svg class="w-3 h-3 ms-2 rtl:rotate-180 lucide lucide-biceps-flexed"
                                              xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -81,6 +81,7 @@
         </div>
         <ShowModal :show="showExerciseView" @close="closeModal" :exercise="selectedExercise"/>
         <ResultsModal :show="showResultsModal" @close="closeModal" :results="workout.userWorkouts"/>
+        <CreateResultsModal :show="showCreateResultsModal" @close="closeModal"/>
     </AuthenticatedLayout>
 </template>
 
@@ -92,11 +93,13 @@ import {Head, Link} from "@inertiajs/vue3";
 import ShowModal from "@/Pages/Exercises/Components/ShowModal.vue";
 import {ref} from "vue";
 import ResultsModal from "@/Pages/Workouts/Components/ResultsModal.vue";
+import CreateResultsModal from "@/Pages/Workouts/Components/CreateResultsModal.vue";
 
 const props = defineProps(['workout'])
 const showExerciseView = ref(false)
 const selectedExercise = ref({})
 const showResultsModal = ref(false)
+const showCreateResultsModal = ref(false)
 
 const {formatMessageDateLong} = useTime()
 
@@ -110,5 +113,6 @@ const closeModal = () => {
     selectedExercise.value = {}
 
     showResultsModal.value = false
+    showCreateResultsModal.value = false
 }
 </script>
