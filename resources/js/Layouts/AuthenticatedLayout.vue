@@ -54,6 +54,9 @@ onMounted(() => {
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
+                                <NavLink :href="route('calendar')" :active="route().current('calendar')">
+                                    Calendar
+                                </NavLink>
                                 <NavLink :href="route('timer')" :active="route().current('timer')">
                                     Timer
                                 </NavLink>
