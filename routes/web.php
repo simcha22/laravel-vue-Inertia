@@ -28,6 +28,10 @@ Route::get('/timer', function () {
     return Inertia::render('Timer');
 })->middleware(['auth', 'verified'])->name('timer');
 
+Route::get('/calendar', function () {
+    return Inertia::render('Calendar');
+})->middleware(['auth', 'verified'])->name('calendar');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
