@@ -23,7 +23,7 @@ class StoreResultRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sets' => 'required|numeric|between:5,20',
+            'sets' => 'required|numeric|between:2,20',
             'reps' =>  'required|numeric|between:1,20',
             'type' => ['required', Rule::in(['constant','variable'])],
             'level' => ['required', Rule::in(['rx', 'scaled'])],
@@ -32,7 +32,7 @@ class StoreResultRequest extends FormRequest
             'done_at' => 'required|date',
             'weight.*.reps' =>  'required|numeric|between:1,20',
             'weight.*.value' =>  'required|numeric|between:5,350',
-            'weight.*.percent' =>  'required|numeric|between:5,105',
+            'weight.*.percent' =>  'required|numeric|between:5,110',
         ];
     }
 }

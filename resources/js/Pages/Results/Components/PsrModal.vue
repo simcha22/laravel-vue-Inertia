@@ -9,31 +9,45 @@
             <form @submit.prevent="savePost" class="space-y-6 mt-4">
                 <div>
                     <RadioInput v-model="form.type" :items="['constant','variable']" name="type"/>
+                    <InputError class="mt-2" :message="form.errors.type"/>
                 </div>
                 <div class="flex justify-center">
                     <div class="mr-2  w-1/2 text-center">
                         <InputLabel for="sets" value="Sets"/>
-                        <InputNumber id="sets" v-model="form.sets" minValue="5" maxValue="10" stepValue="1"/>
+                        <InputNumber id="sets" v-model="form.sets" minValue="2" maxValue="10" stepValue="1"/>
+                        <InputError class="mt-2" :message="form.errors.sets"/>
                     </div>
                     <div class="mr-2 w-1/2 text-center" v-if="form.type === 'constant'">
                         <InputLabel for="reps" value="Reps"/>
                         <InputNumber id="reps" v-model="form.reps" minValue="1" maxValue="20" stepValue="1"/>
+                        <InputError class="mt-2" :message="form.errors.reps"/>
                     </div>
                 </div>
                 <div>
                     <InputLabel for="weight" value="Weight"/>
-                    <div v-for="weight in form.weight" class="flex mb-3">
-                        <InputGroup v-model="weight.value" :number="weight.number"
-                                    :reps="form.type === 'constant' ? weight.reps + ' reps' : ''"/>
-                        <InputNumber v-if="form.type === 'variable'" id="reps" v-model="weight.reps" minValue="1"
-                                     maxValue="20" value="reps" stepValue="1"/>
-                        <InputNumber id="percent" v-model="weight.percent" value="%" minValue="50" maxValue="105"
+                    <div v-for="weight in form.weight" class="flex mb-3 items-start">
+                        <div>
+                            <InputGroup v-model="weight.value" :number="weight.number"
+                                        :reps="form.type === 'constant' ? weight.reps + ' reps' : ''"/>
+                            <InputError class="mt-2" :message="form.errors[`weight.${weight.number-1}.value`]"/>
+                        </div>
+                        <div>
+                            <InputNumber v-if="form.type === 'variable'" id="reps" v-model="weight.reps" minValue="1"
+                                         maxValue="20" value="reps" stepValue="1"/>
+                            <InputError class="mt-2" :message="form.errors[`weight.${weight.number-1}.reps`]"/>
+                        </div>
+
+                        <div>
+                        <InputNumber id="percent" v-model="weight.percent" value="%" minValue="30" maxValue="110"
                                      stepValue="5"/>
-                        <!--<TextInput v-model="weight.percent" placeholder="percent"/> -->
+                            <InputError class="mt-2" :message="form.errors[`weight.${weight.number-1}.percent`]"/>
+                        </div>
+
                     </div>
                 </div>
                 <div>
                     <RadioInput v-model="form.level" :items="['rx','scaled']" name="level"/>
+                    <InputError class="mt-2" :message="form.errors.level"/>
                 </div>
                 <div>
                     <InputLabel for="notes" value="Notes"/>
@@ -128,14 +142,18 @@ onMounted(() => {
 })
 
 watch(props, (value) => {
-
     if (props.result.id) {
         form.sets = props.result.rounds
         form.reps = 5
         form.type = props.result.reps_type
         form.level = props.result.level
-        form.weight = props.result.meta
-    }else{
+        setTimeout(() => {
+            form.weight = props.result.meta.map((obj, index) => ({
+                ...obj,
+                id: index + 1
+            }));
+        }, 100);
+    } else {
         form.sets = 5
         form.reps = 5
         form.type = 'constant'
@@ -147,8 +165,15 @@ watch(props, (value) => {
 })
 
 const savePost = () => {
-    form.post(route('results.store', props.exercise))
-    closeModal()
+    form.post(route('results.store', props.exercise), {
+        preserveScroll: true,
+        onSuccess: () => {
+            form.reset()
+            closeModal()
+        },
+        onError: () => {
+        },
+    })
 }
 
 watch(() => form.type, (newValue, oldValue) => {

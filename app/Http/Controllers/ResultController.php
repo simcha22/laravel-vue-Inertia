@@ -8,6 +8,7 @@ use App\Http\Resources\ExerciseResource;
 use App\Models\Exercise;
 use App\Models\Result;
 use App\Services\ResultService;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -24,6 +25,7 @@ class ResultController extends Controller
             $query->where('user_id', auth()->id());
         }])->where('id','=', $exercise->id)->get();
 
+        Log::info($exercise);
         return Inertia::render('Results/Index', [
             'exercise' => ExerciseResource::collection($exercise),
             'cards' => $this->resultService->card ?? null,
